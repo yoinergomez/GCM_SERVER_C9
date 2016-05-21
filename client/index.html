@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/jquery-2.2.3.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<h3>Enviar Notificacion Push</h3>
+
+<h4>Usuario Destino:<h4>
+<textarea id="myTextarea">
+</textarea>
+
+<h4>Mensaje:<h4>
+<textarea id="myTextareaMessage"></textarea>
+
+<p>Para enviar su menjaje oprima el boton.</p>
+
+<button type="button" onclick="myFunction()">Enviar</button>
+
+<p id="demo">este texto se reemplaza en la funcion</p>
+<p id="mensaje">el mensaje debe aparecer aqui</p>
+
+<script>
+function myFunction() {
+    var user = document.getElementById("myTextarea").value;
+    document.getElementById("demo").innerHTML = user;
+    var msg = document.getElementById("myTextareaMessage").value;
+    document.getElementById("mensaje").innerHTML = msg;
+	
+	$.ajax({
+		type: 'POST',
+		//url: 'http://localhost:3000/api/GCMUsers/push',
+		url: 'http://gcm-server-class-yoinergomez.c9users.io:8080/api/GCMUsers/push',
+		data: JSON.stringify({username: user, message: msg}),
+		contentType: 'application/json'
+	}, function(res){
+		console.log('client POST ' + res);
+	});
+	
+}
+</script>
+
+</body>
+</html>
